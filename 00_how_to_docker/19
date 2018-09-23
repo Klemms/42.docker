@@ -1,0 +1,26 @@
+docker run --name Abathur -p 3000:3000 --volume ~/python:/root -i python:2-slim
+
+# On s'y attache en ouvrant la console em mode interractif
+docker container exec -it Abathur /bin/bash
+
+# On update les packages
+apt-get update
+apt-get upgrade
+
+# On installe Flask
+pip install Flask
+
+# On cree notre script Flask
+apt-get install vim
+vim /root/script.py
+
+# On y met (Ou on wget cette adresse : http://paste.debian.net/plain/1043868 que j'ai uploadé grace au package pastebinit)
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+	return "<!DOCTYPE html><html><head></head><body><h1>Hello World</h1></body></html>"
+
+if __name__ == '__main__':
+	app.run(host='0.0.0.0', port=3000)
